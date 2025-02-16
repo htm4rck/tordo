@@ -1,0 +1,2 @@
+- Factorizar para que tenga los modulos: inventario, transacciones, cmr, srm
+- debe ser una base de datos por empresa

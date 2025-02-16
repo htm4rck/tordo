@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: tordo_postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_DB: general
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./auth/auth.sql:/docker-entrypoint-initdb.d/auth.sql
+    networks:
+      - tordo_network
+
+  backend:
+    build:
+      context: business
+      dockerfile: Dockerfile
+    container_name: tordo_backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: general
+      DB_USER: postgres
+      DB_PASSWORD: yourpassword
+      JWT_SECRET: your_secret_key
+    depends_on:
+      - postgres
+    command: ["./wait-for-it.sh", "postgres:5432", "--", "npm", "run", "start:prod"]
+    networks:
+      - tordo_network
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: tordo_portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - tordo_network
+
+networks:
+  tordo_network:
+
+volumes:
+  postgres_data:
+  portainer_data:
