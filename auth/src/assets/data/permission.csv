@@ -1,0 +1,8 @@
+"id";"elementCode";"roleCode"
+1;MENU_ticketManager_agrement;ADMIN_TicketManager
+2;MENU_ticketManager_area;ADMIN_TicketManager
+3;MENU_ticketManager_budget;ADMIN_TicketManager
+4;MENU_ticketManager_budget;ADMIN_TicketManager
+5;MENU_ticketManager_category;ADMIN_TicketManager
+6;MENU_ticketManager_setting;ADMIN_TicketManager
+7;MENU_ticketManager_ticket;ADMIN_TicketManager

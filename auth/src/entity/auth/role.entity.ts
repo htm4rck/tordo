@@ -1,14 +1,13 @@
 import {
     Entity,
-    PrimaryGeneratedColumn,
     Column,
-    OneToMany,
+    OneToMany, PrimaryColumn,
 } from 'typeorm';
 import { Permission } from './permission.entity';
 
 @Entity()
 export class Role {
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn()
     roleCode: string;
 
     @Column({ comment: "Nombre del rol" })

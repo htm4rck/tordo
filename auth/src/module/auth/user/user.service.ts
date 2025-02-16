@@ -2,10 +2,10 @@ import {Injectable, HttpException, HttpStatus} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {User} from '../../../entity/auth/user.entity';
-import {UserLoginModel, UserSessionModel} from '../../../model/auth/user.model';
+import {UserSessionModel, UserModel} from '../../../model/auth/user.model';
 import {ApiResponse} from '../../../model/api-response.model';
 import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
+import {JwtService} from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
@@ -16,55 +16,73 @@ export class UserService {
     ) {
     }
 
-    async login(userLoginModel: UserLoginModel): Promise<ApiResponse<UserSessionModel>> {
-        const user = await this.userRepository.findOne({
-            where: {userCode: userLoginModel.user},
-        });
-
-        if (!user) {
-            console.log(123)
-            throw new HttpException(
-                new ApiResponse({
-                    success: false,
-                    message: 'Usuario o clave incorrectos1',
-                    errorCode: 'LOGIN_ERROR',
-                }),
-                HttpStatus.UNAUTHORIZED,
-            );
+    async createUser(userModel: UserModel): Promise<ApiResponse<UserSessionModel>> {
+        const hashedPassword = await bcrypt.hash(userModel.password, 10);
+        userModel.password = hashedPassword;
+        const userEntity: any = {
+            userCode: 'U' + userModel.nif,
+            username: userModel.username,
+            nif: userModel.nif,
+            lastName: userModel.lastName,
+            firstName: userModel.firstName,
+            password: hashedPassword,
+            isActive: true,
+            isVerified: true,
+            createdAt: userModel.at,
+            createdBy: userModel.by,
         }
-
-        if (!userLoginModel.pass) {
-            throw new HttpException(
-                new ApiResponse({
-                    success: false,
-                    message: 'Usuario o clave incorrectos2',
-                    errorCode: 'LOGIN_ERROR',
-                }),
-                HttpStatus.UNAUTHORIZED,
-            );
-        }
-        console.log(userLoginModel);
-        console.log(user.password);
-        const isPasswordValid = await bcrypt.compare(userLoginModel.pass, user.password);
-        if (!isPasswordValid) {
-            throw new HttpException(
-                new ApiResponse({
-                    success: false,
-                    message: 'Usuario o clave incorrectos3',
-                    errorCode: 'LOGIN_ERROR',
-                }),
-                HttpStatus.UNAUTHORIZED,
-            );
-        }
-        // const token = '12345'; // Ejemplo de token
-
-        const payload = { username: user.username, sub: user.userCode };
-        const token = this.jwtService.sign(payload);
-
+        const newUser = this.userRepository.create(userEntity);
+        await this.userRepository.save(newUser);
         return new ApiResponse({
             success: true,
-            data: {token: token},
-            message: 'Inicio de sesión exitoso',
+            data: {token: 'user_created'},
+            message: 'Usuario creado exitosamente',
+        });
+    }
+
+    async updateUser(userCode: string, userModel: UserModel): Promise<ApiResponse<UserSessionModel>> {
+        const user = await this.userRepository.findOne({where: {userCode}});
+        if (!user) {
+            throw new HttpException(
+                new ApiResponse({
+                    success: false,
+                    message: 'Usuario no encontrado',
+                    errorCode: 'USER_NOT_FOUND',
+                }),
+                HttpStatus.NOT_FOUND,
+            );
+        }
+
+        const hashedPassword = await bcrypt.hash(userModel.password, 10);
+        userModel.password = hashedPassword;
+        Object.assign(user, userModel);
+
+        await this.userRepository.save(user);
+        return new ApiResponse({
+            success: true,
+            data: {token: 'user_updated'},
+            message: 'Usuario actualizado exitosamente',
+        });
+    }
+
+    async deleteUser(userCode: string): Promise<ApiResponse<null>> {
+        const user = await this.userRepository.findOne({where: {userCode}});
+        if (!user) {
+            throw new HttpException(
+                new ApiResponse({
+                    success: false,
+                    message: 'Usuario no encontrado',
+                    errorCode: 'USER_NOT_FOUND',
+                }),
+                HttpStatus.NOT_FOUND,
+            );
+        }
+
+        await this.userRepository.remove(user);
+        return new ApiResponse({
+            success: true,
+            data: null,
+            message: 'Usuario eliminado exitosamente',
         });
     }
 }

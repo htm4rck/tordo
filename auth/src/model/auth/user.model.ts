@@ -1,18 +1,64 @@
-import {IsNotEmpty, IsString, Length} from 'class-validator';
+import {IsBoolean, IsDate, IsEmail, IsNotEmpty, IsOptional, IsString, Length} from 'class-validator';
 
 export class UserModel {
-    @IsNotEmpty()
-    @IsString()
-    @Length(8, 11)
-    document: string;
 
     @IsNotEmpty()
     @IsString()
-    user: string;
+    @Length(1, 50)
+    nif: string;
 
     @IsString()
-    pass?: string;
+    @Length(1, 50)
+    username: string;
 
+    @IsOptional()
+    @IsEmail()
+    email: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @Length(6, 100)
+    password: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @Length(1, 50)
+    firstName: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @Length(1, 50)
+    lastName: string;
+
+    @IsOptional()
+    @IsString()
+    @Length(10, 15)
+    phoneNumber: string;
+
+    @IsOptional()
+    @IsString()
+    address: string;
+
+    @IsBoolean()
+    isActive: boolean;
+
+    @IsBoolean()
+    isVerified: boolean;
+
+    @IsOptional()
+    @IsDate()
+    lastLogin: Date;
+
+    @IsOptional()
+    @IsDate()
+    at: Date;
+    @IsOptional()
+    @IsString()
+    by: string;
+
+    constructor(partial: Partial<UserModel>) {
+        Object.assign(this, partial);
+    }
 }
 
 export class UserLoginModel {

@@ -7,7 +7,7 @@ import {UserLoginModel, UserSessionModel} from '../../model/auth/user.model';
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
-    @Post('login')
+    @Post()
     @HttpCode(HttpStatus.OK)
     async login(
         @Body(new ValidationPipe({
