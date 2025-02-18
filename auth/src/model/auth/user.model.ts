@@ -1,4 +1,4 @@
-import {IsBoolean, IsDate, IsEmail, IsNotEmpty, IsOptional, IsString, Length} from 'class-validator';
+import { IsBoolean, IsDate, IsEmail, IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
 
 export class UserModel {
 
@@ -7,6 +7,7 @@ export class UserModel {
     @Length(1, 50)
     nif: string;
 
+    @IsNotEmpty()
     @IsString()
     @Length(1, 50)
     username: string;
@@ -52,9 +53,11 @@ export class UserModel {
     @IsOptional()
     @IsDate()
     at: Date;
+
     @IsOptional()
     @IsString()
     by: string;
+
 
     constructor(partial: Partial<UserModel>) {
         Object.assign(this, partial);
@@ -66,8 +69,13 @@ export class UserLoginModel {
     @IsString({ message: 'El usuario debe ser una cadena de texto' })
     user: string;
 
+    @IsNotEmpty({ message: 'La contraseña no puede estar vacía' })
     @IsString({ message: 'La contraseña debe ser una cadena de texto' })
-    pass?: string;
+    pass: string;
+
+    @IsNotEmpty({ message: 'La firma no puede estar vacía' })
+    @IsString({ message: 'La firma debe ser una cadena de texto' })
+    signature: string;
 }
 
 export class UserSessionModel {

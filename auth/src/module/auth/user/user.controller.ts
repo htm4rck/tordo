@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Post, Put, ValidationPipe } from '@nestjs/common';
 import { ApiResponse } from '../../../model/api-response.model';
 import { UserService } from './user.service';
-import {UserLoginModel, UserModel, UserSessionModel} from '../../../model/auth/user.model';
+import { UserModel, UserSessionModel } from '../../../model/auth/user.model';
 
 @Controller('user')
 export class UserController {

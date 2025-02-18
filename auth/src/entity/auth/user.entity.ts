@@ -61,6 +61,6 @@ export class User {
     @OneToMany(() => UserRolCompany, userRolCompany => userRolCompany.userCode)
     userRolCompanies: UserRolCompany[];
 
-    @OneToMany(() => Session, session => session.userCode)
+    @OneToMany(() => Session, session => session.user)
     sessions: Session[];
 }

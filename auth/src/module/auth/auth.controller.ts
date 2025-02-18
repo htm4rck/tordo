@@ -1,13 +1,13 @@
-import { Body, Controller, HttpCode, HttpException, HttpStatus, Post, ValidationPipe } from '@nestjs/common';
-import { ApiResponse } from '../../model/api-response.model';
+import { Body, Controller, HttpCode, HttpException, HttpStatus, Post, Headers, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import {UserLoginModel, UserSessionModel} from '../../model/auth/user.model';
+import {ApiResponse} from "../../model/api-response.model";
+import {UserLoginModel, UserSessionModel} from "../../model/auth/user.model";
 
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
-    @Post()
+    @Post('login')
     @HttpCode(HttpStatus.OK)
     async login(
         @Body(new ValidationPipe({
@@ -21,10 +21,11 @@ export class AuthController {
                     errorDetails: messages
                 }, HttpStatus.BAD_REQUEST);
             }
-        })) userLogin: UserLoginModel,
+        })) userLoginDto: UserLoginModel,
+        @Headers('x-signature') signature: string,
     ): Promise<ApiResponse<UserSessionModel>> {
         try {
-            const userSessionModelApiResponse = await this.authService.login(userLogin);
+            const userSessionModelApiResponse = await this.authService.login(userLoginDto, signature);
             return new ApiResponse(userSessionModelApiResponse);
         } catch (error: unknown) {
             if (error instanceof Error) {

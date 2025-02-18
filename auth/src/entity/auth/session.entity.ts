@@ -1,29 +1,29 @@
 import {
     Entity,
-    PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
-    UpdateDateColumn,
+    PrimaryGeneratedColumn,
     ManyToOne,
-    JoinColumn, PrimaryColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 
 @Entity()
 export class Session {
-    @PrimaryColumn({ comment: "Código único del objeto; Token de la sesión" })
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
     token: string;
 
-    @ManyToOne(() => User)
-    @JoinColumn({ name: 'userCode' })
-    userCode: User;
+    @Column()
+    expiresAt: Date;
 
-    @CreateDateColumn({ comment: "Fecha de inicio de la sesión" })
+    @CreateDateColumn()
     createdAt: Date;
 
-    @UpdateDateColumn({ comment: "Fecha de última actualización de la sesión" })
-    updatedAt: Date;
+    @Column()
+    signature: string;
 
-    @Column({ type: 'date', comment: "Fecha de expiración de la sesión" })
-    expirationDate: Date;
+    @ManyToOne(() => User, user => user.sessions)
+    user: User;
 }
