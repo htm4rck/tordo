@@ -3,13 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import {User} from "../../entity/auth/user.entity";
-import {Session} from "../../entity/auth/session.entity";
-import {ApiResponse} from "../../model/api-response.model";
-import {UserLoginModel, UserSessionModel} from "../../model/auth/user.model";
+import {User} from "@entity/auth/user.entity";
+import {Session} from "@entity/auth/session.entity";
+import {ApiResponse} from "@model/api-response.model";
+import {UserLoginModel, UserSessionModel} from "@model/auth/user.model";
 
 @Injectable()
 export class AuthService {
+    private readonly ONE_HOUR = 3600 * 1000;
+    private readonly expiresAt = new Date(Date.now() + (this.ONE_HOUR * 2));
+
     constructor(
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
@@ -48,11 +51,10 @@ export class AuthService {
 
         const payload = { username: user.username, sub: user.userCode };
         const token = this.jwtService.sign(payload);
-        const expiresAt = new Date(Date.now() + 60 * 1000); // 60 segundos de expiración
 
         const session = this.sessionRepository.create({
             token,
-            expiresAt,
+            expiresAt: this.expiresAt,
             user,
             signature,
         });
@@ -64,12 +66,21 @@ export class AuthService {
             message: 'Inicio de sesión exitoso',
         });
     }
-
     async validateToken(token: string, signature: string): Promise<boolean> {
-        const session = await this.sessionRepository.findOne({ where: { token } });
-        if (!session || session.expiresAt < new Date() || session.signature !== signature) {
+        try {
+            const session = await this.sessionRepository.findOne({ where: { token } });
+            if (!session || session.expiresAt < new Date() || session.signature !== signature) {
+                return false;
+            }
+            const newExpiresAt = new Date(Date.now() + this.ONE_HOUR * 2);
+            if (session.expiresAt < newExpiresAt) {
+                session.expiresAt = newExpiresAt;
+                await this.sessionRepository.save(session);
+            }
+            return true;
+        } catch (error) {
+            console.error('Error al validar el token:', error);
             return false;
         }
-        return true;
     }
 }

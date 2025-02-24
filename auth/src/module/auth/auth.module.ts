@@ -3,21 +3,26 @@ import {PassportModule} from '@nestjs/passport';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import {TypeOrmModule} from "@nestjs/typeorm";
-import {User} from "../../entity/auth/user.entity";
+import {User} from "@entity/auth/user.entity";
 import {JwtModule} from "@nestjs/jwt";
 import {JwtStrategy} from "./jwt.strategy";
-import {Session} from "../../entity/auth/session.entity";
+import {Session} from "@entity/auth/session.entity";
+import {UserController} from "./user/user.controller";
+import {LicenseController} from "./license/license.controller";
+import {UserService} from "./user/user.service";
+import {LicenseService} from "./license/license.service";
+import {License} from "@entity/auth/license.entity";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([User, Session]),
+        TypeOrmModule.forFeature([User, Session, License]),
         PassportModule.register({ defaultStrategy: 'jwt' }),
         JwtModule.register({
             secret: 'your_secret_key', // Debes cambiar esto a una clave secreta segura
-            signOptions: { expiresIn: '60s' },
+            //signOptions: { expiresIn: '60s' },
         }),
     ],
-    providers: [AuthService, JwtStrategy],
-    controllers: [AuthController],
+    providers: [AuthService, JwtStrategy, UserService, LicenseService],
+    controllers: [AuthController, UserController, LicenseController],
 })
 export class AuthModule {}

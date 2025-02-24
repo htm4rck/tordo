@@ -14,7 +14,12 @@
     "rootDir": "src",
     "outDir": "dist",
     "baseUrl": "./",
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "@entity/*": ["src/entity/*"],
+      "@model/*": ["src/model/*"],
+      "@auth/*": ["src/auth/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

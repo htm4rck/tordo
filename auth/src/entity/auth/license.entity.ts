@@ -1,21 +1,27 @@
 import {
     Entity,
-    PrimaryColumn,
     Column,
     CreateDateColumn,
     UpdateDateColumn,
-    DeleteDateColumn,
+    DeleteDateColumn, PrimaryGeneratedColumn, BeforeInsert,
 } from 'typeorm';
+import {generateLicenseKey} from "../entities.utils";
+import {LicenseType} from "@model/auth/auth.enum";
 
 @Entity()
 export class License {
-    @PrimaryColumn({ type: 'uuid', comment: "Identificador único de la licencia" })
+    @PrimaryGeneratedColumn('uuid', { comment: "Identificador único de la licencia" })
     licenseCode: string;
 
     @Column({ comment: "Clave de la licencia (serial key)" })
     licenseKey: string;
 
-    @Column({ type: 'enum', enum: ['root', 'professional', 'applicative'], comment: "Tipo de licencia" })
+    @BeforeInsert()
+    generateLicenseKey() {
+        this.licenseKey = generateLicenseKey();
+    }
+
+    @Column({ type: 'enum', enum: LicenseType, comment: "Tipo de licencia" })
     type: 'root' | 'professional' | 'applicative';
 
     @Column({ type: 'date', nullable: true, comment: "Fecha de expiración de la licencia" })
@@ -24,7 +30,7 @@ export class License {
     @Column({ comment: "Duración de la licencia en días" })
     durationInDays: number;
 
-    @Column({ default: true, comment: "Indica si la licencia está activa" })
+    @Column({ default: false, comment: "Indica si la licencia está activa" })
     isActive: boolean;
 
     @CreateDateColumn({ comment: "Fecha de creación de la licencia" })

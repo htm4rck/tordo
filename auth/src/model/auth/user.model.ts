@@ -73,9 +73,9 @@ export class UserLoginModel {
     @IsString({ message: 'La contraseña debe ser una cadena de texto' })
     pass: string;
 
-    @IsNotEmpty({ message: 'La firma no puede estar vacía' })
-    @IsString({ message: 'La firma debe ser una cadena de texto' })
-    signature: string;
+    // @IsNotEmpty({ message: 'La firma no puede estar vacía' })
+    // @IsString({ message: 'La firma debe ser una cadena de texto' })
+    // signature: string;
 }
 
 export class UserSessionModel {
