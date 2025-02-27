@@ -1,6 +1,6 @@
 {
   "name": "auth",
-  "version": "2025-02-27 1.0.0",
+  "version": "2025-02-27 1.9.0",
   "description": "Auth NestJS",
   "main": "dist/main.js",
   "scripts": {

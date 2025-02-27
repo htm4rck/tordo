@@ -13,7 +13,7 @@ async function bootstrap() {
     const config = new DocumentBuilder()
         .setTitle('Auth API')
         .setDescription('API para gestionar el sistema de Autenticacion')
-        .setVersion('1.0')
+        .setVersion('2025-02-27 1.9.0')
         .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api-docs', app, document);
