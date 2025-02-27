@@ -17,7 +17,7 @@ export class GeoLocationLoaderService implements OnApplicationBootstrap {
     ) {}
 
     async onApplicationBootstrap() {
-        const filePath = path.join(__dirname, '../../resource/geo_location.csv');
+        const filePath = path.join(__dirname, '../../assets/geo_location.csv');
 
         if (!fs.existsSync(filePath)) {
             console.warn(`CSV file not found: ${filePath}`);

@@ -1,6 +1,6 @@
-elementCode;elementType;app;menu;form;buttonOrInput;tx_name
+elementCode;elementType;app;menu;form;buttonOrInput;description
 MENU_ticketManager_area;MENU;ticketManager;area;;;Menu Area
-MENU_ticketManager_agrement;MENU;ticketManager;agrement;;;Menu Flujo de Aceptación
+MENU_ticketManager_agrement;MENU;ticketManager;agrement;;;Menu Flujo de Aceptaciï¿½n
 MENU_ticketManager_category;MENU;ticketManager;category;;;Menu Categoria
 MENU_ticketManager_ticket;MENU;ticketManager;ticket;;;Menu Ticket
 MENU_ticketManager_budget;MENU;ticketManager;budget;;;Menu Presupuesto

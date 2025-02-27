@@ -12,17 +12,19 @@ import {LicenseController} from "./license/license.controller";
 import {UserService} from "./user/user.service";
 import {LicenseService} from "./license/license.service";
 import {License} from "@entity/auth/license.entity";
+import {AuthLoaderService} from "./auth.loader";
+import {Element} from "@entity/auth/element.entity";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([User, Session, License]),
+        TypeOrmModule.forFeature([User, Session, License, Element]),
         PassportModule.register({ defaultStrategy: 'jwt' }),
         JwtModule.register({
             secret: 'your_secret_key', // Debes cambiar esto a una clave secreta segura
             //signOptions: { expiresIn: '60s' },
         }),
     ],
-    providers: [AuthService, JwtStrategy, UserService, LicenseService],
+    providers: [AuthService, JwtStrategy, UserService, LicenseService, AuthLoaderService],
     controllers: [AuthController, UserController, LicenseController],
 })
 export class AuthModule {}

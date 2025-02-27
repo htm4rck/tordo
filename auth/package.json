@@ -1,12 +1,13 @@
 {
   "name": "auth",
-  "version": "1.0.0",
+  "version": "2025-02-27 1.0.0",
   "description": "Auth NestJS",
   "main": "dist/main.js",
   "scripts": {
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "build": "nest build"
+    "start": "concurrently \"npm run copy-resources\" \"nest start\"",
+    "start:dev": "concurrently \"npm run copy-resources\" \"nest start --watch\"",
+    "build": "nest build && npm run copy-resources",
+    "copy-resources": "mkdir -p dist && copyfiles -u 1 \"src/assets/**/*\" dist"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.9",
@@ -26,7 +27,9 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.0",
     "swagger-ui-express": "^5.0.1",
-    "typeorm": "^0.3.20"
+    "typeorm": "^0.3.20",
+    "concurrently": "^8.0.1",
+    "copyfiles": "^2.4.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",

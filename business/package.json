@@ -4,9 +4,10 @@
   "description": "Business",
   "main": "dist/main.js",
   "scripts": {
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "build": "nest build"
+    "start": "concurrently \"npm run copy-resources\" \"nest start\"",
+    "start:dev": "concurrently \"npm run copy-resources\" \"nest start --watch\"",
+    "build": "nest build && npm run copy-resources",
+    "copy-resources": "copyfiles -u 1 src/assets/**/* dist"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

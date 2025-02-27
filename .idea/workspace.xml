@@ -5,18 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78300b3d-c2de-4a17-bb4c-d7820550c638" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/auth/src/entity/entities.utils.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth/src/model/auth/auth.enum.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth/src/model/auth/license.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth/src/module/auth/license/license.controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth/src/module/auth/license/license.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/model/loader.model.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/module/auth/auth.loader.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/nest-cli.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/entity/auth/license.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/entity/auth/license.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/model/auth/user.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/model/auth/user.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/auth/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/auth/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/resource/geo_location.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/assets/data/element.csv" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/assets/data/element.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/model/auth/license.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/model/auth/license.model.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth/src/module/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/module/auth/auth.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/module/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/module/auth/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/module/auth/user/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/module/auth/user/user.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/todo.md" beforeDir="false" afterPath="$PROJECT_DIR$/auth/todo.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/auth/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/business/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/src/geo-location/geo-location.loader.ts" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/geo-location/geo-location.loader.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +56,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "npm.AuthStart.executor": "Run",
+    "npm.build.executor": "Run",
     "ts.external.directory.path": "/home/marc/Documentos/Proyectos/Marc/tordo/auth/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -87,9 +90,20 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="build" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/auth/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Docker.TordoLocal" />
       <item itemvalue="npm.AuthStart" />
+      <item itemvalue="npm.build" />
     </list>
   </component>
   <component name="SharedIndexes">
@@ -109,7 +123,7 @@
       <updated>1739742111457</updated>
       <workItem from="1739742112588" duration="6233000" />
       <workItem from="1739828139749" duration="9445000" />
-      <workItem from="1740286597575" duration="10935000" />
+      <workItem from="1740286597575" duration="25216000" />
     </task>
     <servers />
   </component>

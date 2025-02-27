@@ -1,4 +1,4 @@
-import {IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsString, Length} from 'class-validator';
+import {IsBoolean, IsEnum, IsNumber, IsString} from 'class-validator';
 import {LicenseType} from "@model/auth/auth.enum";
 
 export class LicenceCreateModel {
